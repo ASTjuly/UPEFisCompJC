@@ -100,13 +100,150 @@ De acordo com o **[programa do item a)](https://github.com/ASTjuly/UPEFisCompJC/
 ![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/a.png)
 Sendo seus dados:
 
-Número máximo de infectados: 118794;
-
-Número máximo de Recuperados: 447146;
-
-Dia de máxima infecção: 16;
-
-Dia final: 213.
+Número máximo de infectados: 118794; Número máximo de Recuperados: 447146; Dia de máxima infecção: 16; Dia final: 213.
 
 
 Assim, finalizando o item a).
+
+### b) Considere que, por algum motivo, a taxa de infecção seja constante e igual a **&beta;=0.5** e a taxa de recuperação *dependa do tempo* das seguintes formas: <br /> **i) &gamma;=0.2, para d < d<sub>max</sub> e &gamma;=0.1, para d >= d<sub>max</sub>** <br /> **ii) &gamma;=0.2, para d < d<sub>max</sub> e &gamma;=0.4, para d >= d<sub>max</sub>** <br /> Plote em um mesmo gráfico as curvas para **I(t)** para os três casos acima, **a), b-i) e b-ii)**.
+
+Para que fosse possível variar o &gamma; conforme o indicado na questão, é necessário a separação do laço *while* em dois: um para o momento antes do pico dos parâmetros iniciais, e outro após o pico dos parâmetros iniciais. Desta forma, o trecho do código fica:
+```
+# Cria pontos conforme o avanço do tempo, sendo 16 o dMax para os parâmetros iniciais beta 0.5 e gamma 0.2
+while t0 < 16:
+    Snew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[0]
+    Inew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[1]
+    Rnew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[2]
+
+    listS.append(Snew)
+    listI.append(Inew)
+    listR.append(Rnew)
+
+    S0 = Snew
+    I0 = Inew
+    R0 = Rnew
+
+    t0 += dt
+
+# gamma de 0.2 p/ 0.1 quando t0 > dMax
+while 16 < t0 <= tMax:
+    Snew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.1)[0]
+    Inew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.1)[1]
+    Rnew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.1)[2]
+
+    listS.append(Snew)
+    listI.append(Inew)
+    listR.append(Rnew)
+
+    S0 = Snew
+    I0 = Inew
+    R0 = Rnew
+
+    t0 += dt
+```
+
+Observe como o número 16 dita onde será quebrado o *while*, isto porque o valor 16 é respectivo ao dia de infecção máxima nos parâmetros iniciais da questão, e este valores mudam somente após este pico.
+
+Desta forma, obtemos os seguintes gráficos:
+
+Gráfico obtido a partir do **[programa do item b-i)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/b_i.py)**
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/b_i.png)
+Seus dados:
+
+Número máximo de infectados: 155527; Número máximo de Recuperados: 491632; Dia de máxima infecção: 21; Dia final: 330.
+
+É possível observar que a função criou um novo pico conforme a mudança da taxa de recuperação &gamma; para um valor menor. Isto é possível pelo papel da taxa de recuperação estar interligado com o tempo em que o indivíduo estará infectado desta maneira: $\frac{1}{\gamma}=$Dias ifectados, neste caso o valor passa de $\frac{1}{0.2}=5$ para $\frac{1}{0.1}=10$, dobrando o dia em que os Infectados terão que transitar para o número de Recuperados e, assim, criando um novo acúmulo de Infectados gerando um novo pico no dia 21. Além da consequência de um atraso no dia final do surto, que agora está no dia 330, quase ao final do tempo máximo.
+
+Gráfico obtido a partir do **[programa do item b-ii)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/b_ii.py)**
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/b_ii.png)
+Seus dados:
+
+Número máximo de infectados: 118422; Número máximo de Recuperados: 372193; Dia de máxima infecção: 16; Dia final: 122.
+
+Nesse caso, é possível observar que a alteração da taxa de recuperação &gamma; para um valor maior, resultou na diminuição do caso de infectados e em uma aceleração para o fim do surto, já que os contaminados irão passar $\frac{1}{0.4}=2,5$ dias para saírem do estado de Infectados para Recuperados — tempo menor que o inicial de 5 dias.
+
+Agora, o gráfico obtido a partir do **[programa do item b)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/b.py)** pedido na questão que compara a função *I(t)* para as situações dos itens a), b-i) e b-ii):
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/b.png)
+
+Dados em comparação:
+|  | a) | b-i) | b-ii) |       
+| -- | -- | -- | -- |
+| d<sub>max</sub> | 16 | 21 | 16 |
+| d<sub>final</sub> | 213 | 330 | 122 |
+
+### c) Considere agora que a taxa de recuperação seja constante e igual a **&gamma;=0.2** e a taxa de transmissão dependa do tempo das seguintes formas: <br /> **i) &beta;=0.5, para d < d<sub>max</sub> e &beta;=0.25, para d >= d<sub>max</sub>** <br /> **ii) &beta;=0.5, para d < d<sub>max</sub> e &beta;=0.75, para d >= d<sub>max</sub>** <br /> Plote em um mesmo gráfico as curvas para **I(t)** para os três casos acima, **a), c-i) e c-ii)**.
+
+O mesmo passo inicial do item b foi utilizado no trecho correspondente aos laços *while* do programa, sendo sua única diferença o parâmetro em que foram aplicadas as mudanças (exemplo do item c-i) abaixo):
+```
+# Cria pontos conforme o avanço do tempo, sendo 16 o dMax para os parâmetros iniciais beta 0.5 e gamma 0.2
+while t0 < 16:
+    Snew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[0]
+    Inew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[1]
+    Rnew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[2]
+
+    listS.append(Snew)
+    listI.append(Inew)
+    listR.append(Rnew)
+
+    S0 = Snew
+    I0 = Inew
+    R0 = Rnew
+
+    t0 += dt
+
+# beta de 0.5 p/ 0.25 quando t0 > dMax
+while 16 < t0 <= tMax:
+    Snew = RK2(SIR, S0, I0, R0, beta=0.25, gamma=0.2)[0]
+    Inew = RK2(SIR, S0, I0, R0, beta=0.25, gamma=0.2)[1]
+    Rnew = RK2(SIR, S0, I0, R0, beta=0.25, gamma=0.2)[2]
+
+    listS.append(Snew)
+    listI.append(Inew)
+    listR.append(Rnew)
+
+    S0 = Snew
+    I0 = Inew
+    R0 = Rnew
+
+    t0 += dt
+```
+
+Desta forma, obtemos os seguintes gráficos:
+
+Gráfico obtido a partir do **[programa do item c-i)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/c_i.py)**
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/c_i.png)
+Seus dados:
+
+Número máximo de infectados: 118422; Número máximo de Recuperados: 372168; Dia de máxima infecção: 16; Dia final: 224.
+
+Já nesta situação, observa-se que o pico é mantido no dia 16, embora ocorra um atraso para o controle do surto, que chega apenas dia 224 — 11 dias depois em comparação caso os valores permancessem os mesmos, como no item a). Essas ocasionalidades são oriundas da diminuição da taxa de transmissão **&beta;**, que é responsável por ditar a possibilidade de um indivíduo Infectado transmitir para outro Suscetível. Conforme o número diminui, menos chance de infectar alguém que não contaminou-se com o vírus, embora, a doença ainda será lentamente espalhada até chegar no dia em que for controlada.
+
+Gráfico obtido a partir do **[programa do item c-ii)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/c_ii.py)**
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/c_ii.png)
+Seus dados:
+
+Número máximo de infectados: 135435; Número máximo de Recuperados: 479345; Dia de máxima infecção: 18; Dia final: 190.
+
+Já nesse caso, a variação temporal no **&beta;** ocasionou em um novo pico 2 dias depois do primeiro e no adiantamento do dia de controle do surto. Isto ocorre porque o vírus possui uma taxa de transmissão maior, ou seja, uma doença altamente contagiosa e que dissemina com bastante verocidade. Embora, com a mesma taxa de recuperação **&gamma;=0.2**, os Infectados logo irão ser transferidos para os Recuperados, o que resultará no dia do controle chegar mais cedo que a situação do item a).
+
+Agora, o gráfico obtido a partir do **[programa do item c)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/c.py)** pedido na questão que compara a função *I(t)* para as situações dos itens a), c-i) e c-ii):
+![UPEFisCompJC Preview](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/Graph/c.png)
+
+Dados em comparação:
+|  | a) | c-i) | c-ii) |
+| -- | -- | -- | -- |
+| d<sub>max</sub> | 16 | 16 | 18 |
+| d<sub>final</sub> | 213 | 224 | 190 |
+
+## Conclusões da Atividade
+
+Por fim, é possível entender como o Método de Runge-Kutta contribui de forma mais precisa na interpolação dos dados de uma EDO. Em comparativo, refazendo a situação do item a) com o seguinte **[programa)](https://github.com/ASTjuly/UPEFisCompJC/blob/main/At1/a_euler.py)** utilizando o Método de Euler, os valores são ainda próximos porém com uma diferença pequena:
+
+|  | I<sub>max</sub> | R<sub>max</sub> | d<sub>max</sub> | d<sub>final</sub> |
+| -- | -- | -- | -- | -- |
+| Euler | 118767 | 447065 | 16 | 213 |
+| RK2 | 118794 | 447146 | 16 | 213 |
+
+Visto a utilização do Método de Runge-Kutta de 2ª Ordem ser o nível mais básico e não oferecer tanta precisão, a diferença entre os métodos matemáticos são mínimas mas estão presentes. Conforme escalasse o número de ordem em Runge-Kutta, maior a exatidão na qual serão observados os dados.
+
+Também foram estudados na atividade as alterações devidas as variações de **&beta;(t)** e **&gamma;(t)**. Que mudaram os gráficos em seus pontos de infecção máxima e momento de controle do surto epidemiológico conforme o previsto pelo modelo teórico SIR. Assim, comprovando a funcionalidade do modelo no método computacional.
