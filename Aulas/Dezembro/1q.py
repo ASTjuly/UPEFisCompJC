@@ -17,7 +17,7 @@ def CA_run(initial_state, n_steps, rule_number):
     m_cells = len(initial_state)
     CA_run = np.zeros((n_steps, m_cells))
     CA_run[0, :] = initial_state
-
+# laço for faz a leitura da vizinhança de cada ponto
     for step in range(1, n_steps):
         all_triplets = np.stack(
             [
