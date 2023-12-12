@@ -50,6 +50,7 @@ while t0 < 16:
 
     t0 += dt
 
+# beta de 0.5 p/ 0.25 quando t0 > dMax
 while 16 < t0 <= tMax:
     Snew = RK2(SIR, S0, I0, R0, beta=0.25, gamma=0.2)[0]
     Inew = RK2(SIR, S0, I0, R0, beta=0.25, gamma=0.2)[1]
