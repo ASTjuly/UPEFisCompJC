@@ -77,7 +77,7 @@ while t0 < 16:
 
     t0 += dt
 
-# beta variam c)i 0.25, c)ii 0.75
+# betas alterados para c)i 0.25 e c)ii 0.75
 while 16 < t0 <= tMax:
     Snew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[0]
     Inew = RK2(SIR, S0, I0, R0, beta=0.5, gamma=0.2)[1]
