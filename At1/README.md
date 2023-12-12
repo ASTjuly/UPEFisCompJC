@@ -246,4 +246,20 @@ Por fim, é possível entender como o Método de Runge-Kutta contribui de forma 
 
 Visto a utilização do Método de Runge-Kutta de 2ª Ordem ser o nível mais básico e não oferecer tanta precisão, a diferença entre os métodos matemáticos são mínimas mas estão presentes. Conforme escalasse o número de ordem em Runge-Kutta, maior a exatidão na qual serão observados os dados.
 
-Também foram estudados na atividade as alterações devidas as variações de **&beta;(t)** e **&gamma;(t)**. Que esses parâmetros mudaram os gráficos em seus pontos de infecção máxima e momento de controle do surto epidemiológico conforme o previsto pelo modelo teórico SIR. Assim, comprovando a funcionalidade do modelo no método computacional.
+Também foram estudados na atividade as alterações devidas as variações de **&beta;(t)** e **&gamma;(t)**. Que esses parâmetros mudaram os gráficos em seus pontos de infecção máxima e momento de controle do surto epidemiológico conforme o previsto pelo modelo teórico SIR. Coolocando lado a lado as tabelas nos finais dos itens b) e c):
+
+|  | a) | b-i) &gamma;=0.1 | b-ii) &gamma;=0.4 |       
+| -- | -- | -- | -- |
+| d<sub>max</sub> | 16 | 21 | 16 |
+| d<sub>final</sub> | 213 | 330 | 122 |
+| I<sub>max</sub> | 118794 | 155527 | 118422 |
+
+|  | a) | c-i) &beta;=0.25 | c-ii) &beta;=0.75 |
+| -- | -- | -- | -- |
+| d<sub>max</sub> | 16 | 16 | 18 |
+| d<sub>final</sub> | 213 | 224 | 190 |
+| I<sub>max</sub> | 118794 | 118422 | 135435 |
+
+Temos assim que as mudanças mais impactantes em questão da alteração de d<sub>max</sub> e d<sub>final</sub> foram observadas nas variações de **&gamma;**, já que esta taxa controla a quantidade de tempo (em dias, neste caso) que o indivíduo levará para transitar de Infectado para Recuperado. Já as alterações em **&beta;** impactam no número máximo de infectados, por essa ser responsável pela transmissão.
+
+Assim, comprovando a funcionalidade do modelo no método computacional.
