@@ -246,4 +246,4 @@ Por fim, é possível entender como o Método de Runge-Kutta contribui de forma 
 
 Visto a utilização do Método de Runge-Kutta de 2ª Ordem ser o nível mais básico e não oferecer tanta precisão, a diferença entre os métodos matemáticos são mínimas mas estão presentes. Conforme escalasse o número de ordem em Runge-Kutta, maior a exatidão na qual serão observados os dados.
 
-Também foram estudados na atividade as alterações devidas as variações de **&beta;(t)** e **&gamma;(t)**. Que mudaram os gráficos em seus pontos de infecção máxima e momento de controle do surto epidemiológico conforme o previsto pelo modelo teórico SIR. Assim, comprovando a funcionalidade do modelo no método computacional.
+Também foram estudados na atividade as alterações devidas as variações de **&beta;(t)** e **&gamma;(t)**. Que esses parâmetros mudaram os gráficos em seus pontos de infecção máxima e momento de controle do surto epidemiológico conforme o previsto pelo modelo teórico SIR. Assim, comprovando a funcionalidade do modelo no método computacional.
