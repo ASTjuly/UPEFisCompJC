@@ -20,11 +20,11 @@ def CA_run(initial_state, n_steps, rule_number):
     for step in range(1, n_steps):
         all_quintuplets = np.stack(
             [
-                np.roll(CA_run[step-1, :], 1),
+                np.roll(CA_run[step-1, :], 2),
                 np.roll(CA_run[step - 1, :], 1),
                 CA_run[step - 1, :],
                 np.roll(CA_run[step - 1, :], -1),
-                np.roll(CA_run[step - 1, :], -1),
+                np.roll(CA_run[step - 1, :], -2),
             ]
         )
 
